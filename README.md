@@ -2,7 +2,7 @@
 
 ![image](https://user-images.githubusercontent.com/2646487/139561642-6913a43d-792b-47e1-9d63-a605dfa33bde.png)
 
-This is an ESPHome component that can be used to read the current height from standing desk controllers which communicate over UART.
+This is an ESPHome component that can be used to read the current height from standing desk controllers which communicate over UART. It has been tested to work with Uplift Desk controllers.
 
 ## Usage
 

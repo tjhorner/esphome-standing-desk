@@ -33,6 +33,16 @@ sensor:
 Additionally, if you're using Home Assistant and have pins connected to the up and down buttons, you can add the following to your node's configuration to add a service which will set the desk height to the specified value:
 
 ```yaml
+output:
+  - platform: gpio
+    inverted: true
+    id: up_pin
+    pin: D5 # Change this!
+  - platform: gpio
+    inverted: true
+    id: down_pin
+    pin: D6 # Change this!
+
 api:
   services:
     - service: set_height

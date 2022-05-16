@@ -1,0 +1,55 @@
+external_components:
+  - source: github://tjhorner/esphome-standing-desk@external-component
+    components: [ standing_desk_height ]
+
+uart:
+  id: standing_desk_uart
+  rx_pin: ${standing_desk_uart_rx_pin}
+  baud_rate: 9600
+
+sensor:
+  - platform: standing_desk_height
+    id: desk_height
+    name: Desk Height
+
+output:
+  - platform: gpio
+    inverted: true
+    id: standing_desk_up_pin
+    pin: ${standing_desk_up_pin}
+    
+  - platform: gpio
+    inverted: true
+    id: standing_desk_down_pin
+    pin: ${standing_desk_down_pin}
+
+number:
+  - platform: template
+    id: target_desk_height
+    name: Target Desk Height
+    restore_value: true
+    optimistic: true
+    min_value: ${standing_desk_min_height}
+    max_value: ${standing_desk_max_height}
+    step: 0.1
+    on_value:
+      then:
+        - script.execute: standing_desk_set_height
+
+script:
+  - id: standing_desk_set_height
+    then:
+      - script.wait: standing_desk_set_height
+      - if:
+          condition:
+            lambda: "return id(desk_height)->get_last_read() > id(target_desk_height).state;"
+          then:
+            - output.turn_on: standing_desk_down_pin
+            - wait_until:
+                lambda: "return id(desk_height)->get_last_read() <= id(target_desk_height).state + 0.4;"
+            - output.turn_off: standing_desk_down_pin
+          else:
+            - output.turn_on: standing_desk_up_pin
+            - wait_until:
+                lambda: "return id(desk_height)->get_last_read() >= id(target_desk_height).state - 0.4;"
+            - output.turn_off: standing_desk_up_pin

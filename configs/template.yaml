@@ -39,7 +39,7 @@ number:
     min_value: ${standing_desk_min_height}
     max_value: ${standing_desk_max_height}
     step: 0.1
-    on_value:
+    set_action:
       then:
         - script.execute: standing_desk_set_height
 

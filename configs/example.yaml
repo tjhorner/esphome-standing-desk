@@ -1,0 +1,20 @@
+esphome:
+  name: standing-desk-example
+  platform: ESP8266
+  board: d1_mini
+
+packages:
+  standing_desk: github://tjhorner/esphome-standing-desk/configs/template.yaml
+
+substitutions:
+  # Required (replace these with your own values!)
+  standing_desk_uart_rx_pin: D1
+  standing_desk_up_pin: D3
+  standing_desk_down_pin: D4
+  standing_desk_min_height: "25.2"
+  standing_desk_max_height: "50.8"
+
+  # Optional (defaults shown)
+  desk_height_name: "Desk Height"
+  target_desk_height_name: "Target Desk Height"
+  standing_desk_height_units: "in"

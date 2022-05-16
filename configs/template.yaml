@@ -1,6 +1,11 @@
 external_components:
-  - source: github://tjhorner/esphome-standing-desk@external-component
+  - source: github://tjhorner/esphome-standing-desk
     components: [ standing_desk_height ]
+
+substitutions:
+  desk_height_name: "Desk Height"
+  target_desk_height_name: "Target Desk Height"
+  standing_desk_height_units: "in"
 
 uart:
   id: standing_desk_uart
@@ -10,7 +15,8 @@ uart:
 sensor:
   - platform: standing_desk_height
     id: desk_height
-    name: Desk Height
+    name: ${standing_desk_height_name}
+    unit_of_measurement: ${standing_desk_height_units}
 
 output:
   - platform: gpio
@@ -26,7 +32,8 @@ output:
 number:
   - platform: template
     id: target_desk_height
-    name: Target Desk Height
+    name: ${target_desk_height_name}
+    unit_of_measurement: ${standing_desk_height_units}
     restore_value: true
     optimistic: true
     min_value: ${standing_desk_min_height}
@@ -39,7 +46,6 @@ number:
 script:
   - id: standing_desk_set_height
     then:
-      - script.wait: standing_desk_set_height
       - if:
           condition:
             lambda: "return id(desk_height)->get_last_read() > id(target_desk_height).state;"

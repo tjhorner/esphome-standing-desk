@@ -15,7 +15,7 @@ uart:
 sensor:
   - platform: standing_desk_height
     id: desk_height
-    name: ${standing_desk_height_name}
+    name: ${desk_height_name}
     unit_of_measurement: ${standing_desk_height_units}
 
 output:

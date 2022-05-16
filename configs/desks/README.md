@@ -21,3 +21,11 @@ packages:
   standing_desk: github://tjhorner/esphome-standing-desk/configs/template.yaml
   desk_config: github://tjhorner/esphome-standing-desk/configs/desks/uplift_v2.yaml
 ```
+
+### Fully Jarvis
+
+```yaml
+packages:
+  standing_desk: github://tjhorner/esphome-standing-desk/configs/template.yaml
+  desk_config: github://tjhorner/esphome-standing-desk/configs/desks/fully_jarvis.yaml
+```

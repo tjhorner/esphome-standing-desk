@@ -2,5 +2,6 @@ substitutions:
   standing_desk_uart_rx_pin: D2
   standing_desk_up_pin: D7
   standing_desk_down_pin: D8
+  standing_desk_variant: "jarvis"
   standing_desk_min_height: "24.5"
   standing_desk_max_height: "50.0"

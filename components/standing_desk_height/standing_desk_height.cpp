@@ -5,6 +5,17 @@ namespace standing_desk_height {
 
 static const char *const TAG = "standing_desk_height";
 
+void StandingDeskHeightSensor::set_decoder_variant(const std::string &decoder_variant) {
+  if (decoder_variant == "jarvis") {
+    this->decoder = new JarvisDecoder();
+  } else if (decoder_variant == "uplift") {
+    this->decoder = new UpliftDecoder();
+  } else {
+    ESP_LOGE(TAG, "Unknown decoder variant '%s'", decoder_variant.c_str());
+    this->decoder = nullptr;
+  }
+}
+
 void StandingDeskHeightSensor::loop() {
   while (this->available() > 0)
   {

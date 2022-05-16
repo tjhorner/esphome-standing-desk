@@ -6,6 +6,7 @@
 
 #include "decoder.h"
 #include "jarvis_decoder.h"
+#include "uplift_decoder.h"
 
 namespace esphome {
 namespace standing_desk_height {
@@ -13,9 +14,7 @@ namespace standing_desk_height {
 class StandingDeskHeightSensor : public PollingComponent, public uart::UARTDevice, public sensor::Sensor
 {
 public:
-  StandingDeskHeightSensor() {
-    this->decoder = new JarvisDecoder();
-  }
+  void set_decoder_variant(const std::string &decoder_variant);
 
   void loop() override;
   void update() override;

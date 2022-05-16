@@ -1,8 +1,0 @@
-{
-  "files.associations": {
-    "*.ejs": "html",
-    "*.scss": "postcss",
-    "locale": "cpp",
-    "ostream": "cpp"
-  }
-}

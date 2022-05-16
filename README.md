@@ -1,8 +1,10 @@
-# ESPHome Standing Desk Config
+# ESPHome Standing Desk Configs
 
-![image](https://user-images.githubusercontent.com/2646487/139561642-6913a43d-792b-47e1-9d63-a605dfa33bde.png)
+This repository contains everything you need to set up common standing desks with a controller board running ESPHome. Specifically:
 
-This is an ESPHome component that can be used to read the current height from standing desk controllers which communicate over UART. It has been tested to work with Uplift Desk controllers.
+- The `standing_desk_height` component, which reads the desk's height over UART
+- A template package which uses the `standing_desk_height` component and allows you to set the desk's height
+- Various packages that work with common standing desk brands
 
 ## Usage
 
@@ -58,3 +60,21 @@ By default, the component will report the height as inches, but if your desk rep
 You can find the open source designs I've made for a generic desk controller [here](https://github.com/tjhorner/wifi-desk-controller). It features two RJ45 jacks so you can passthrough to the original keypad. If you order the boards from JLCPCB and get the parts from DigiKey, the cost is about $5 for a single board.
 
 But if you don't want to to order and assemble everything yourself, you can buy one from me [here](https://shop.horner.tj/things/desk-controller). And it even comes with a fancy 3D-printed case!
+
+## Home Assistant Card
+
+![image](https://user-images.githubusercontent.com/2646487/139561642-6913a43d-792b-47e1-9d63-a605dfa33bde.png)
+
+This is the YAML config for the card I use on my Home Assistant dashboard. It shows the current and target desk height.
+
+```yaml
+type: entities
+state_color: false
+title: Standing Desk
+entities:
+  - entity: number.target_desk_height
+    name: Target Height
+    icon: mdi:target
+  - entity: sensor.desk_height
+    name: Actual Height
+```

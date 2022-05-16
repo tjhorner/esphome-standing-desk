@@ -3,10 +3,10 @@ import esphome.config_validation as cv
 from esphome.components import uart, sensor
 from esphome.const import CONF_ID
 
-DEPENDENCIES = ['uart']
+DEPENDENCIES = ["uart"]
 
-standing_desk_height_ns = cg.esphome_ns.namespace('standing_desk_height')
-StandingDeskHeightSensor = standing_desk_height_ns.class_('StandingDeskHeightSensor', cg.PollingComponent, uart.UARTDevice)
+standing_desk_height_ns = cg.esphome_ns.namespace("standing_desk_height")
+StandingDeskHeightSensor = standing_desk_height_ns.class_("StandingDeskHeightSensor", cg.PollingComponent, uart.UARTDevice)
 
 CONFIG_SCHEMA = (
     sensor.sensor_schema(
@@ -15,7 +15,7 @@ CONFIG_SCHEMA = (
         accuracy_decimals=1
     )
     .extend({ cv.GenerateID(): cv.declare_id(StandingDeskHeightSensor), })
-    .extend(cv.polling_component_schema('500ms'))
+    .extend(cv.polling_component_schema("500ms"))
     .extend(uart.UART_DEVICE_SCHEMA)
 )
 

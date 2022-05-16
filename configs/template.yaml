@@ -41,21 +41,16 @@ number:
     step: 0.1
     set_action:
       then:
-        - script.execute: standing_desk_set_height
-
-script:
-  - id: standing_desk_set_height
-    then:
-      - if:
-          condition:
-            lambda: "return id(desk_height)->get_last_read() > id(target_desk_height).state;"
-          then:
-            - output.turn_on: standing_desk_down_pin
-            - wait_until:
-                lambda: "return id(desk_height)->get_last_read() <= id(target_desk_height).state + 0.4;"
-            - output.turn_off: standing_desk_down_pin
-          else:
-            - output.turn_on: standing_desk_up_pin
-            - wait_until:
-                lambda: "return id(desk_height)->get_last_read() >= id(target_desk_height).state - 0.4;"
-            - output.turn_off: standing_desk_up_pin
+        - if:
+            condition:
+              lambda: "return id(desk_height)->get_last_read() > x;"
+            then:
+              - output.turn_on: standing_desk_down_pin
+              - wait_until:
+                  lambda: "return id(desk_height)->get_last_read() <= x + 0.4;"
+              - output.turn_off: standing_desk_down_pin
+            else:
+              - output.turn_on: standing_desk_up_pin
+              - wait_until:
+                  lambda: "return id(desk_height)->get_last_read() >= x - 0.4;"
+              - output.turn_off: standing_desk_up_pin

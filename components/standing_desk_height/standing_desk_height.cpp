@@ -10,12 +10,12 @@ void StandingDeskHeightSensor::loop() {
   {
     uint8_t byte;
     this->read_byte(&byte);
-    
-    ESP_LOGD(TAG, "Reading byte: %d", byte);
 
-    if (this->deskPacket.put(byte)) {
-      float height = this->deskPacket.decode();
-      ESP_LOGD(TAG, "Got desk packet: %f", height);
+    ESP_LOGVV(TAG, "Reading byte: %d", byte);
+
+    if (this->decoder->put(byte)) {
+      float height = this->decoder->decode();
+      ESP_LOGVV(TAG, "Got desk height: %f", height);
       this->last_read = height;
     }
   }

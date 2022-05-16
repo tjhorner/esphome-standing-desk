@@ -30,6 +30,7 @@ substitutions:
   desk_height_name: "Desk Height"
   target_desk_height_name: "Target Desk Height"
   standing_desk_height_units: "in"
+  standing_desk_variant: "uplift" # or "jarvis"
 ```
 
 This will expose two entities:
@@ -51,6 +52,7 @@ external_components:
 sensor:
   - platform: standing_desk_height
     id: desk_height
+    variant: jarvis
 ```
 
 By default, the component will report the height as inches, but if your desk reports its height in centimeters, you can simply set `units_of_measurement` to `"cm"` in the config like any other sensor.

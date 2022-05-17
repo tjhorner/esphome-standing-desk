@@ -4,8 +4,9 @@
 namespace esphome {
 namespace standing_desk_height {
 
-#define JARVIS_ADDR 0xF2
+const uint8_t JARVIS_ADDR = 0xF2;
 
+// Implementation based off of: https://github.com/phord/Jarvis
 void JarvisDecoder::reset(uint8_t ch) {
   state = static_cast<state_t>(SYNC + (ch == JARVIS_ADDR));
   cmd = NONE;
@@ -38,7 +39,7 @@ bool JarvisDecoder::put(uint8_t ch) {
     state = static_cast<state_t>(CHKSUM - ch - 1);
     break;
 
-  default:    // ARGS
+  default: // ARGS
     if (state <= LENGTH || state > ARGS) {
       reset(ch);
       return false;
@@ -58,12 +59,14 @@ bool JarvisDecoder::put(uint8_t ch) {
     reset(ch);
     return false;
   }
+
   // Common increment for every state
   state = static_cast<state_t>(state + 1);
   if (state < SYNC || state > ENDMSG) {
     reset(ch);
     return false;
   }
+
   return complete && cmd == HEIGHT;
 }
 

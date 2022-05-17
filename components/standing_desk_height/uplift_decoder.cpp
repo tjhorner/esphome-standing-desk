@@ -3,6 +3,8 @@
 namespace esphome {
 namespace standing_desk_height {
 
+// Implementation based off of: https://github.com/rmcgibbo/Jarvis
+// Which, despite the name, works for Uplift desks too
 bool UpliftDecoder::put(uint8_t b) {
   switch (state_) {
   case SYNC1:

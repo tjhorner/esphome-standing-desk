@@ -1,0 +1,55 @@
+output:
+  - platform: gpio
+    inverted: true
+    id: button_bit1
+    pin: ${button_bit1_pin}
+
+  - platform: gpio
+    inverted: true
+    id: button_bit2
+    pin: ${button_bit2_pin}
+
+  - platform: gpio
+    inverted: true
+    id: button_bit4
+    pin: ${button_bit4_pin}
+
+  - platform: gpio
+    inverted: true
+    id: button_m
+    pin: ${button_m_pin}
+
+button:
+  - platform: template
+    name: "Desk Preset 1"
+    on_press:
+      - output.turn_on: button_bit1
+      - output.turn_on: button_bit2
+      - delay: 1s
+      - output.turn_off: button_bit2
+      - output.turn_off: button_bit1
+
+  - platform: template
+    name: "Desk Preset 2"
+    on_press:
+      - output.turn_on: button_bit4
+      - delay: 100ms
+      - output.turn_off: button_bit4
+
+  - platform: template
+    name: "Desk Preset 3"
+    on_press:
+      - output.turn_on: button_bit2
+      - output.turn_on: button_bit4
+      - delay: 100ms
+      - output.turn_off: button_bit4
+      - output.turn_off: button_bit2
+
+  - platform: template
+    name: "Desk Preset 4"
+    on_press:
+      - output.turn_on: button_bit4
+      - output.turn_on: button_bit1
+      - delay: 100ms
+      - output.turn_off: button_bit1
+      - output.turn_off: button_bit4

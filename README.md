@@ -59,7 +59,7 @@ By default, the component will report the height as inches, but if your desk rep
 
 ### Addons
 
-There is extra functionality outside of the core component that you can add with packages.
+With addons, you can use ESPHome packages to add extra functionality outside of the core component.
 
 #### Presets
 

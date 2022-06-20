@@ -63,7 +63,9 @@ With addons, you can use ESPHome packages to add extra functionality outside of 
 
 #### Presets
 
-You can add preset recall support with this package. Add this line to your config:
+You can add preset recall support with this package. It will create a button entity for each preset.
+
+To use, add this line to your config:
 
 ```yaml
 packages:

@@ -5,3 +5,9 @@ substitutions:
   standing_desk_variant: "jarvis"
   standing_desk_min_height: "24.5"
   standing_desk_max_height: "50.0"
+
+  # Presets
+  button_bit1_pin: D7
+  button_bit2_pin: D8
+  button_bit4_pin: D6
+  button_m_pin: D1

@@ -57,6 +57,29 @@ sensor:
 
 By default, the component will report the height as inches, but if your desk reports its height in centimeters, you can simply set `units_of_measurement` to `"cm"` in the config like any other sensor.
 
+### Addons
+
+There is extra functionality outside of the core component that you can add with packages.
+
+#### Presets
+
+You can add preset recall support with this package. Add this line to your config:
+
+```yaml
+packages:
+  presets_addon: github://tjhorner/esphome-standing-desk/configs/addons/presets.yaml
+```
+
+Then, if you are not using a pre-made desk config, you must add the following substitutions:
+
+```yaml
+substitutions:
+  button_bit1_pin: D7
+  button_bit2_pin: D8
+  button_bit4_pin: D6
+  button_m_pin: D1
+```
+
 ## Hardware
 
 You can find the open source designs I've made for a generic desk controller [here](https://github.com/tjhorner/wifi-desk-controller). It features two RJ45 jacks so you can passthrough to the original keypad. If you order the boards from JLCPCB and get the parts from DigiKey, the cost is about $5 for a single board.

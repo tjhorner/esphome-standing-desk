@@ -22,6 +22,7 @@ output:
 button:
   - platform: template
     name: "Desk Preset 1"
+    icon: "mdi:numeric-1-box"
     on_press:
       - output.turn_on: button_bit1
       - output.turn_on: button_bit2
@@ -31,6 +32,7 @@ button:
 
   - platform: template
     name: "Desk Preset 2"
+    icon: "mdi:numeric-2-box"
     on_press:
       - output.turn_on: button_bit4
       - delay: 100ms
@@ -38,6 +40,7 @@ button:
 
   - platform: template
     name: "Desk Preset 3"
+    icon: "mdi:numeric-3-box"
     on_press:
       - output.turn_on: button_bit2
       - output.turn_on: button_bit4
@@ -47,6 +50,7 @@ button:
 
   - platform: template
     name: "Desk Preset 4"
+    icon: "mdi:numeric-4-box"
     on_press:
       - output.turn_on: button_bit4
       - output.turn_on: button_bit1

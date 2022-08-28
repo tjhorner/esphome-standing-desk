@@ -49,12 +49,14 @@ number:
             then:
               - output.turn_on: standing_desk_down_pin
               - wait_until:
-                  lambda: "return id(desk_height)->get_last_read() <= x + 0.4;"
+                  condition:
+                    lambda: "return id(desk_height)->get_last_read() <= x + 0.4;"
                   timeout: 10s
               - output.turn_off: standing_desk_down_pin
             else:
               - output.turn_on: standing_desk_up_pin
               - wait_until:
-                  lambda: "return id(desk_height)->get_last_read() >= x - 0.4;"
+                  condition:
+                    lambda: "return id(desk_height)->get_last_read() >= x - 0.4;"
                   timeout: 10s
               - output.turn_off: standing_desk_up_pin

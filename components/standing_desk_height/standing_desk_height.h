@@ -5,6 +5,7 @@
 #include "esphome/components/uart/uart.h"
 
 #include "decoder.h"
+#include "autonomous_decoder.h"
 #include "jarvis_decoder.h"
 #include "uplift_decoder.h"
 

@@ -11,6 +11,7 @@ StandingDeskHeightSensor = standing_desk_height_ns.class_("StandingDeskHeightSen
 DECODER_VARIANTS = [
     "uplift",
     "jarvis",
+    "omnidesk",
 ]
 
 CONFIG_SCHEMA = (

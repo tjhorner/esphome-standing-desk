@@ -10,6 +10,8 @@ void StandingDeskHeightSensor::set_decoder_variant(const std::string &decoder_va
     this->decoder = new JarvisDecoder();
   } else if (decoder_variant == "uplift") {
     this->decoder = new UpliftDecoder();
+  } else if (decoder_variant == "omnidesk") {
+    this->decoder = new OmnideskDecoder();
   } else {
     ESP_LOGE(TAG, "Unknown decoder variant '%s'", decoder_variant.c_str());
     this->decoder = nullptr;

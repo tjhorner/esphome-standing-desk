@@ -6,7 +6,7 @@ from esphome.const import CONF_ID, CONF_VARIANT
 DEPENDENCIES = ["uart"]
 
 standing_desk_height_ns = cg.esphome_ns.namespace("standing_desk_height")
-StandingDeskHeightSensor = standing_desk_height_ns.class_("StandingDeskHeightSensor", cg.PollingComponent, uart.UARTDevice)
+StandingDeskHeightSensor = standing_desk_height_ns.class_("StandingDeskHeightSensor", cg.PollingComponent, uart.UARTDevice, sensor.Sensor)
 
 DECODER_VARIANTS = [
     "uplift",

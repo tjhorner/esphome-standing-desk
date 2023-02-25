@@ -12,7 +12,7 @@
 namespace esphome {
 namespace standing_desk_height {
 
-class StandingDeskHeightSensor : public sensor::Sensor, public PollingComponent, public uart::UARTDevice
+class StandingDeskHeightSensor : public PollingComponent, public uart::UARTDevice, public sensor::Sensor
 {
 public:
   void set_decoder_variant(const std::string &decoder_variant);

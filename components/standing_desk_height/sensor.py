@@ -38,7 +38,7 @@ CONFIG_SCHEMA = (
     )
     .extend({
         cv.GenerateID(): cv.declare_id(StandingDeskHeightSensor),
-        cv.Required(CONF_VARIANT): cv.enum(DECODER_VARIANTS, lower=True, space="_"),
+        cv.Optional(CONF_VARIANT): cv.enum(DECODER_VARIANTS, lower=True, space="_"),
     })
     .extend(cv.polling_component_schema("500ms"))
     .extend(uart.UART_DEVICE_SCHEMA)
@@ -46,7 +46,8 @@ CONFIG_SCHEMA = (
 
 def to_code(config):
     var = cg.new_Pvariable(config[CONF_ID])
-    cg.add(var.set_decoder_variant(config[CONF_VARIANT]))
+    if CONF_VARIANT in config:
+        cg.add(var.set_decoder_variant(config[CONF_VARIANT]))
 
     yield cg.register_component(var, config)
     yield sensor.register_sensor(var, config)

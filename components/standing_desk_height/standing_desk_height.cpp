@@ -106,6 +106,15 @@ void StandingDeskHeightSensor::update() {
   }
 }
 
+void StandingDeskHeightSensor::dump_config() {
+  ESP_LOGCONFIG(TAG, "Standing Desk Height:");
+  LOG_SENSOR("  ", "Height Sensor", this);
+  LOG_UPDATE_INTERVAL(this);
+
+  const LogString *variant_s = decoder_variant_to_string(this->decoder_variant);
+  ESP_LOGCONFIG(TAG, "  Decoder Variant: %s", LOG_STR_ARG(variant_s));
+}
+
 float StandingDeskHeightSensor::get_last_read() {
   return this->last_read;
 }

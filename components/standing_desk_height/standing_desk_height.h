@@ -23,6 +23,7 @@ public:
   void setup() override;
   void loop() override;
   void update() override;
+  void dump_config() override;
   float get_last_read();
 
 protected:

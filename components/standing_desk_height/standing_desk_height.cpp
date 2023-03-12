@@ -49,7 +49,7 @@ void StandingDeskHeightSensor::try_next_decoder() {
   this->set_decoder_variant((DecoderVariant) (this->decoder_variant + 1));
 
   const LogString *variant_s = decoder_variant_to_string(this->decoder_variant);
-  ESP_LOGI(TAG, "Attempting next decoder variant: %s", LOG_STR_ARG(variant_s));
+  ESP_LOGD(TAG, "Attempting next decoder variant: %s", LOG_STR_ARG(variant_s));
 
   this->last_read = -1;
   this->started_detecting_at = millis();
@@ -80,14 +80,15 @@ void StandingDeskHeightSensor::loop() {
       ESP_LOGI(TAG, "If you wish to make this change permanent, add the following to this sensor's configuration:");
       ESP_LOGI(TAG, "  variant: %s", LOG_STR_ARG(variant_s));
     } else if (millis() - this->started_detecting_at > 1000) {
-      ESP_LOGI(TAG, "Decoder detection timed out, trying next decoder");
+      const LogString *variant_s = decoder_variant_to_string(this->decoder_variant);
+      ESP_LOGD(TAG, "Decoder %s does not appear to work; trying next decoder", LOG_STR_ARG(variant_s));
       this->try_next_decoder();
     }
   }
 }
 
 void StandingDeskHeightSensor::update() {
-  if (this->last_read != this->last_published) {
+  if (this->last_read > 0 && this->last_read != this->last_published) {
     publish_state(this->last_read);
     this->last_published = this->last_read;
   }

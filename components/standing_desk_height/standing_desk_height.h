@@ -3,7 +3,6 @@
 #include "esphome/core/component.h"
 #include "esphome/components/sensor/sensor.h"
 #include "esphome/components/uart/uart.h"
-#include "esphome/core/preferences.h"
 
 #include "decoder.h"
 #include "jarvis_decoder.h"
@@ -37,8 +36,6 @@ protected:
   uint32_t started_detecting_at = 0;
 
   void try_next_decoder();
-
-  ESPPreferenceObject decoder_pref_;
 };
 
 }

@@ -59,22 +59,12 @@ void StandingDeskHeightSensor::try_next_decoder() {
 }
 
 void StandingDeskHeightSensor::setup() {
-  this->decoder_pref_ = global_preferences->make_preference<DecoderVariant>(this->get_object_id_hash());
-
   if (this->decoder_variant == DECODER_VARIANT_UNKNOWN) {
-    ESP_LOGD(TAG, "Loading decoder variant from flash");
-
-    DecoderVariant saved_variant;
-    if (!this->decoder_pref_.load(&saved_variant)) {
-      ESP_LOGD(TAG, "Could not load decoder variant from flash; starting detection process");
-      this->start_decoder_detection();
-    } else {
-      const LogString *variant_s = decoder_variant_to_string(saved_variant);
-      ESP_LOGD(TAG, "Decoder variant from restore: %s", LOG_STR_ARG(saved_variant));
-      this->set_decoder_variant(saved_variant);
-    }
+    ESP_LOGD(TAG, "Decoder variant was not set in config; using decoder detection");
+    this->start_decoder_detection();
   } else {
-    ESP_LOGD(TAG, "Decoder variant was not loaded from flash; using hardcoded variant");
+    const LogString *variant_s = decoder_variant_to_string(this->decoder_variant);
+    ESP_LOGD(TAG, "Using hardcoded decoder variant %s", LOG_STR_ARG(variant_s));
   }
 }
 
@@ -99,11 +89,8 @@ void StandingDeskHeightSensor::loop() {
 
       const LogString *variant_s = decoder_variant_to_string(this->decoder_variant);
       ESP_LOGI(TAG, "Decoder detection complete. Correct decoder variant: %s", LOG_STR_ARG(variant_s));
-      ESP_LOGI(TAG, "This decoder variant will be saved to flash and restored on boot.");
       ESP_LOGI(TAG, "If you want to make this change permanent, add the following to this sensor's configuration:");
       ESP_LOGI(TAG, "  variant: %s", LOG_STR_ARG(variant_s));
-
-      this->decoder_pref_.save(&this->decoder_variant);
     } else if (millis() - this->started_detecting_at > 1000) {
       const LogString *variant_s = decoder_variant_to_string(this->decoder_variant);
       ESP_LOGD(TAG, "Decoder %s does not appear to work; trying next decoder", LOG_STR_ARG(variant_s));

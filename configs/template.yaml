@@ -6,7 +6,6 @@ substitutions:
   desk_height_name: "Desk Height"
   target_desk_height_name: "Target Desk Height"
   standing_desk_height_units: "in"
-  standing_desk_variant: "uplift"
 
 uart:
   id: standing_desk_uart
@@ -18,7 +17,6 @@ sensor:
     id: desk_height
     name: ${desk_height_name}
     unit_of_measurement: ${standing_desk_height_units}
-    variant: ${standing_desk_variant}
 
 output:
   - platform: gpio

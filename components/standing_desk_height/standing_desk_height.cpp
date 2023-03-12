@@ -5,17 +5,58 @@ namespace standing_desk_height {
 
 static const char *const TAG = "standing_desk_height";
 
-void StandingDeskHeightSensor::set_decoder_variant(const std::string &decoder_variant) {
-  if (decoder_variant == "jarvis") {
-    this->decoder = new JarvisDecoder();
-  } else if (decoder_variant == "uplift") {
-    this->decoder = new UpliftDecoder();
-  } else if (decoder_variant == "omnidesk") {
-    this->decoder = new OmnideskDecoder();
-  } else {
-    ESP_LOGE(TAG, "Unknown decoder variant '%s'", decoder_variant.c_str());
-    this->decoder = nullptr;
+void StandingDeskHeightSensor::set_decoder_variant(DecoderVariant decoder_variant) {
+  if (this->decoder != nullptr) {
+    delete this->decoder;
   }
+
+  this->decoder_variant = decoder_variant;
+  switch (decoder_variant) {
+    case DECODER_VARIANT_JARVIS:
+      this->decoder = new JarvisDecoder();
+      break;
+    case DECODER_VARIANT_UPLIFT:
+      this->decoder = new UpliftDecoder();
+      break;
+    case DECODER_VARIANT_OMNIDESK:
+      this->decoder = new OmnideskDecoder();
+      break;
+    default:
+      ESP_LOGE(TAG, "Unknown decoder variant %d", (uint8_t) decoder_variant);
+      this->decoder = nullptr;
+      return;
+  }
+}
+
+void StandingDeskHeightSensor::start_decoder_detection() {
+  ESP_LOGI(TAG, "Starting decoder detection");
+
+  this->is_detecting = true;
+  this->decoder_variant = DECODER_VARIANT_UNKNOWN;
+  this->try_next_decoder();
+}
+
+void StandingDeskHeightSensor::try_next_decoder() {
+  if (this->decoder != nullptr) {
+    delete this->decoder;
+  }
+
+  if (this->decoder_variant == DECODER_VARIANT_COUNT - 1) {
+    ESP_LOGW(TAG, "No valid decoder found. Please make sure your desk is reporting the height and you can see it on the keypad.");
+
+    this->decoder_variant = DECODER_VARIANT_UNKNOWN;
+    this->decoder = nullptr;
+    this->is_detecting = false;
+    return;
+  }
+
+  this->set_decoder_variant((DecoderVariant) (this->decoder_variant + 1));
+
+  const LogString *variant_s = decoder_variant_to_string(this->decoder_variant);
+  ESP_LOGI(TAG, "Attempting next decoder variant: %s", LOG_STR_ARG(variant_s));
+
+  this->last_read = -1;
+  this->started_detecting_at = millis();
 }
 
 void StandingDeskHeightSensor::loop() {
@@ -26,10 +67,22 @@ void StandingDeskHeightSensor::loop() {
 
     ESP_LOGVV(TAG, "Reading byte: %d", byte);
 
-    if (this->decoder->put(byte)) {
+    if (this->decoder != nullptr && this->decoder->put(byte)) {
       float height = this->decoder->decode();
       ESP_LOGVV(TAG, "Got desk height: %f", height);
       this->last_read = height;
+    }
+  }
+
+  if (this->is_detecting) {
+    if (this->last_read != -1) {
+      this->is_detecting = false;
+
+      const LogString *variant_s = decoder_variant_to_string(this->decoder_variant);
+      ESP_LOGI(TAG, "Decoder detection complete; correct variant is %s", LOG_STR_ARG(variant_s));
+    } else if (millis() - this->started_detecting_at > 1000) {
+      ESP_LOGI(TAG, "Decoder detection timed out, trying next decoder");
+      this->try_next_decoder();
     }
   }
 }

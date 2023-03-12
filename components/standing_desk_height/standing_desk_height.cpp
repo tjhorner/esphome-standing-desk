@@ -8,6 +8,7 @@ static const char *const TAG = "standing_desk_height";
 void StandingDeskHeightSensor::set_decoder_variant(DecoderVariant decoder_variant) {
   if (this->decoder != nullptr) {
     delete this->decoder;
+    this->decoder = nullptr;
   }
 
   this->decoder_variant = decoder_variant;
@@ -31,18 +32,13 @@ void StandingDeskHeightSensor::set_decoder_variant(DecoderVariant decoder_varian
 void StandingDeskHeightSensor::start_decoder_detection() {
   ESP_LOGI(TAG, "Starting decoder detection");
 
-  this->is_detecting = true;
   this->decoder_variant = DECODER_VARIANT_UNKNOWN;
   this->try_next_decoder();
 }
 
 void StandingDeskHeightSensor::try_next_decoder() {
-  if (this->decoder != nullptr) {
-    delete this->decoder;
-  }
-
   if (this->decoder_variant == DECODER_VARIANT_COUNT - 1) {
-    ESP_LOGW(TAG, "No valid decoder found. Please make sure your desk is reporting the height and you can see it on the keypad.");
+    ESP_LOGW(TAG, "No valid decoder found. Please make sure your desk is reporting the height and you can see it on the keypad");
 
     this->decoder_variant = DECODER_VARIANT_UNKNOWN;
     this->decoder = nullptr;
@@ -57,6 +53,7 @@ void StandingDeskHeightSensor::try_next_decoder() {
 
   this->last_read = -1;
   this->started_detecting_at = millis();
+  this->is_detecting = true;
 }
 
 void StandingDeskHeightSensor::loop() {
@@ -79,7 +76,9 @@ void StandingDeskHeightSensor::loop() {
       this->is_detecting = false;
 
       const LogString *variant_s = decoder_variant_to_string(this->decoder_variant);
-      ESP_LOGI(TAG, "Decoder detection complete; correct variant is %s", LOG_STR_ARG(variant_s));
+      ESP_LOGI(TAG, "Decoder detection complete. Correct decoder variant: %s", LOG_STR_ARG(variant_s));
+      ESP_LOGI(TAG, "If you wish to make this change permanent, add the following to this sensor's configuration:");
+      ESP_LOGI(TAG, "  variant: %s", LOG_STR_ARG(variant_s));
     } else if (millis() - this->started_detecting_at > 1000) {
       ESP_LOGI(TAG, "Decoder detection timed out, trying next decoder");
       this->try_next_decoder();

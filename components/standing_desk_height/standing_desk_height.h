@@ -26,11 +26,7 @@ public:
   void dump_config() override;
   float get_last_read();
 
-  void set_runtime_unit_of_measurement(const std::string &unit_of_measurement);
-
 protected:
-  std::string runtime_unit_of_measurement_;
-
   Decoder* decoder;
   DecoderVariant decoder_variant = DECODER_VARIANT_UNKNOWN;
 

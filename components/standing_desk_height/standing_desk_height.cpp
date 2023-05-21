@@ -119,5 +119,11 @@ float StandingDeskHeightSensor::get_last_read() {
   return this->last_read;
 }
 
+// HACK: Workaround for ESPHome 2023.5.1 not having a way to set the unit of measurement at runtime
+void StandingDeskHeightSensor::set_runtime_unit_of_measurement(const std::string &unit_of_measurement) {
+  this->runtime_unit_of_measurement_ = unit_of_measurement;
+  this->set_unit_of_measurement(this->runtime_unit_of_measurement_.c_str());
+}
+
 }
 }

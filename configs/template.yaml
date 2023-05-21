@@ -33,7 +33,6 @@ number:
   - platform: template
     id: target_desk_height
     name: ${target_desk_height_name}
-    unit_of_measurement: ${standing_desk_height_units}
     restore_value: true
     optimistic: true
     min_value: ${standing_desk_min_height}

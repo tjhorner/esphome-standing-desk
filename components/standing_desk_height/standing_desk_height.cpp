@@ -22,6 +22,9 @@ void StandingDeskHeightSensor::set_decoder_variant(DecoderVariant decoder_varian
     case DECODER_VARIANT_OMNIDESK:
       this->decoder = new OmnideskDecoder();
       break;
+    case DECODER_VARIANT_FLEXISPOT_E7:
+      this->decoder = new FlexiSpotE7Decoder();
+      break;
     default:
       ESP_LOGE(TAG, "Unknown decoder variant %d", (uint8_t) decoder_variant);
       this->decoder = nullptr;

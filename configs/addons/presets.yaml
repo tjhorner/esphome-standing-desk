@@ -18,14 +18,12 @@ output:
     id: button_bit4
     pin:
       number: ${button_bit4_pin}
-      allow_other_uses: true
 
   - platform: gpio
     inverted: true
     id: button_m
     pin:
       number: ${button_m_pin}
-      allow_other_uses: true
 
 button:
   # Recall Presets

@@ -24,12 +24,16 @@ output:
   - platform: gpio
     inverted: true
     id: standing_desk_up_pin
-    pin: ${standing_desk_up_pin}
+    pin:
+      number: ${standing_desk_up_pin}
+      allow_other_uses: true
     
   - platform: gpio
     inverted: true
     id: standing_desk_down_pin
-    pin: ${standing_desk_down_pin}
+    pin:
+      number: ${standing_desk_down_pin}
+      allow_other_uses: true
 
 number:
   - platform: template

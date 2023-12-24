@@ -11,6 +11,7 @@ bool OmnideskDecoder::put(uint8_t b) {
       state_ = HEIGHT2;
       return false;
     }
+    [[fallthrough]];
   default:
     return UpliftDecoder::put(b);
   }

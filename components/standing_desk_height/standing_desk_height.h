@@ -8,6 +8,7 @@
 #include "jarvis_decoder.h"
 #include "uplift_decoder.h"
 #include "omnidesk_decoder.h"
+#include "ctb_decoder.h"
 
 #include "decoder_variant.h"
 

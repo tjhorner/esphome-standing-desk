@@ -22,6 +22,9 @@ void StandingDeskHeightSensor::set_decoder_variant(DecoderVariant decoder_varian
     case DECODER_VARIANT_OMNIDESK:
       this->decoder = new OmnideskDecoder();
       break;
+    case DECODER_VARIANT_CTB:
+      this->decoder = new CTBDecoder();
+      break;
     case DECODER_VARIANT_UNKNOWN:
       this->decoder = nullptr;
       return;

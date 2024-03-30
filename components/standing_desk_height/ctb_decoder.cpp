@@ -48,7 +48,8 @@ bool CTBDecoder::put(uint8_t b) {
 }
 
 bool CTBDecoder::verify_checksum() {
-  uint16_t crc = CRC::Calculate(buf_, 3, crc_parameters);
+  uint8_t message[5] = {0xAA, 0xFF, buf_[0], buf_[1], buf_[2]};
+  uint16_t crc = CRC::Calculate(message, sizeof(message), crc_parameters);
   return (buf_[3] == (crc & 0xFF)) && (buf_[4] == (crc >> 8));
 }
 

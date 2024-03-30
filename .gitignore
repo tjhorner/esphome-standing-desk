@@ -3,3 +3,5 @@
 __pycache__
 configs/test.yaml
 .vscode
+*.o
+test_ctb_decoder

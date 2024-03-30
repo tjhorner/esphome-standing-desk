@@ -31,12 +31,25 @@ bool CTBDecoder::put(uint8_t b) {
     return false;
   case HEIGHT3:
     buf_[2] = b;
+    state_ = CRC1;
+    return false;
+  case CRC1:
+    buf_[3] = b;
+    state_ = CRC2;
+    return false;
+  case CRC2:
+    buf_[4] = b;
     state_ = SYNC1;
-    return true;
+    return this->verify_checksum();
   default:
     return false;
   }
   return false;
+}
+
+bool CTBDecoder::verify_checksum() {
+  uint16_t crc = CRC::Calculate(buf_, 3, crc_parameters);
+  return (buf_[3] == (crc & 0xFF)) && (buf_[4] == (crc >> 8));
 }
 
 float CTBDecoder::decode() {

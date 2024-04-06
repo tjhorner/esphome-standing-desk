@@ -4,14 +4,14 @@ output:
     id: button_bit1
     pin:
       number: ${button_bit1_pin}
-      allow_other_uses: true
+      # allow_other_uses: true
 
   - platform: gpio
     inverted: true
     id: button_bit2
     pin:
       number: ${button_bit2_pin}
-      allow_other_uses: true
+      # allow_other_uses: true
 
   - platform: gpio
     inverted: true

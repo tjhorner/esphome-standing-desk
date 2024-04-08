@@ -22,17 +22,32 @@ bool CTBDecoder::put(uint8_t b) {
       return false;
     }
   case HEIGHT1:
-    buf_[0] = b;
-    state_ = HEIGHT2;
-    return false;
+    if (b == 0x00 || b == 0x01 || b == 0x02 || b == 0x03 || b == 0x04 || b == 0x05 || b == 0x06 || b == 0x07 || b == 0x08 || b == 0x09) {
+      buf_[0] = b;
+      state_ = HEIGHT2;
+      return false;
+    } else {
+      state_ = SYNC1;
+      return false;
+    }
   case HEIGHT2:
-    buf_[1] = b;
-    state_ = HEIGHT3;
-    return false;
+    if (b == 0x0A || b == 0x0B || b == 0x0C || b == 0x0D || b == 0x0E || b == 0x0F || b == 0x10 || b == 0x11 || b == 0x12 || b == 0x13 || b == 0x00 || b == 0x01 || b == 0x02) {
+      buf_[1] = b;
+      state_ = HEIGHT3;
+      return false;
+    } else {
+      state_ = SYNC1;
+      return false;
+    }  
   case HEIGHT3:
-    buf_[2] = b;
-    state_ = CRC1;
-    return false;
+    if (b == 0x01 || b == 0x02 || b == 0x03 || b == 0x04 || b == 0x06 || b == 0x07 || b == 0x08 || b == 0x09) {
+      buf_[2] = b;
+      state_ = CRC1;
+      return false;
+    } else {
+      state_ = SYNC1;
+      return false;
+    }    
   case CRC1:
     buf_[3] = b;
     state_ = CRC2;

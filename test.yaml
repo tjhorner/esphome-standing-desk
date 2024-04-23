@@ -1,6 +1,7 @@
 external_components:
-  - source: github://tjhorner/esphome-standing-desk
-    components: [ standing_desk_height ]
+  - source:
+      type: local
+      path: components
 
 substitutions:
   desk_height_name: "Desk Height"
@@ -19,6 +20,9 @@ sensor:
     name: ${desk_height_name}
     unit_of_measurement: ${standing_desk_height_units}
     variant: ${standing_desk_variant}
+
+standing_desk_control:
+  - parallel:
 
 output:
   - platform: gpio

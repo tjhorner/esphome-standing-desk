@@ -22,14 +22,29 @@ bool CTBDecoder::put(uint8_t b) {
       return false;
     }
   case HEIGHT1:
+    if (b > 0x09) {
+      state_ = SYNC1;
+      return false;
+    }
+
     buf_[0] = b;
     state_ = HEIGHT2;
     return false;
   case HEIGHT2:
+    if ((b > 2) && (b < 10 || b > 19)) {
+      state_ = SYNC1;
+      return false;
+    }
+
     buf_[1] = b;
     state_ = HEIGHT3;
     return false;
   case HEIGHT3:
+    if (b > 0x09 || b == 0x05) {
+      state_ = SYNC1;
+      return false;
+    }
+
     buf_[2] = b;
     state_ = CRC1;
     return false;

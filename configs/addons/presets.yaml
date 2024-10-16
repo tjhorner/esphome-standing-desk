@@ -2,25 +2,33 @@ output:
   - platform: gpio
     inverted: true
     id: button_bit1
-    pin: ${button_bit1_pin}
+    pin:
+      number: ${button_bit1_pin}
+      allow_other_uses: true
 
   - platform: gpio
     inverted: true
     id: button_bit2
-    pin: ${button_bit2_pin}
+    pin:
+      number: ${button_bit2_pin}
+      allow_other_uses: true
 
   - platform: gpio
     inverted: true
     id: button_bit4
-    pin: ${button_bit4_pin}
+    pin:
+      number: ${button_bit4_pin}
 
   - platform: gpio
     inverted: true
     id: button_m
-    pin: ${button_m_pin}
+    pin:
+      number: ${button_m_pin}
 
 button:
+  # Recall Presets
   - platform: template
+    id: recall_preset_1
     name: "Desk Preset 1"
     icon: "mdi:numeric-1-box"
     on_press:
@@ -31,6 +39,7 @@ button:
       - output.turn_off: button_bit1
 
   - platform: template
+    id: recall_preset_2
     name: "Desk Preset 2"
     icon: "mdi:numeric-2-box"
     on_press:
@@ -39,6 +48,7 @@ button:
       - output.turn_off: button_bit4
 
   - platform: template
+    id: recall_preset_3
     name: "Desk Preset 3"
     icon: "mdi:numeric-3-box"
     on_press:
@@ -49,6 +59,7 @@ button:
       - output.turn_off: button_bit2
 
   - platform: template
+    id: recall_preset_4
     name: "Desk Preset 4"
     icon: "mdi:numeric-4-box"
     on_press:
@@ -57,3 +68,44 @@ button:
       - delay: 100ms
       - output.turn_off: button_bit1
       - output.turn_off: button_bit4
+
+  # Set Presets
+  - platform: template
+    name: "Set Preset 1"
+    entity_category: "config"
+    icon: "mdi:numeric-1-box-multiple"
+    on_press:
+      - output.turn_on: button_m
+      - delay: 100ms
+      - output.turn_off: button_m
+      - button.press: recall_preset_1
+
+  - platform: template
+    name: "Set Preset 2"
+    entity_category: "config"
+    icon: "mdi:numeric-2-box-multiple"
+    on_press:
+      - output.turn_on: button_m
+      - delay: 100ms
+      - output.turn_off: button_m
+      - button.press: recall_preset_2
+
+  - platform: template
+    name: "Set Preset 3"
+    entity_category: "config"
+    icon: "mdi:numeric-3-box-multiple"
+    on_press:
+      - output.turn_on: button_m
+      - delay: 100ms
+      - output.turn_off: button_m
+      - button.press: recall_preset_3
+
+  - platform: template
+    name: "Set Preset 4"
+    entity_category: "config"
+    icon: "mdi:numeric-4-box-multiple"
+    on_press:
+      - output.turn_on: button_m
+      - delay: 100ms
+      - output.turn_off: button_m
+      - button.press: recall_preset_4

@@ -7,7 +7,7 @@ namespace esphome {
 namespace standing_desk_height {
 
 class UpliftDecoder : public Decoder {
-  private:
+  protected:
     enum state_t {
       SYNC1,   // waiting for 0x01
       SYNC2,   // waiting for 0x01 (second)

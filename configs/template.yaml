@@ -6,7 +6,7 @@ substitutions:
   desk_height_name: "Desk Height"
   target_desk_height_name: "Target Desk Height"
   standing_desk_height_units: "in"
-  standing_desk_variant: "uplift"
+  standing_desk_variant: "auto"
 
 uart:
   id: standing_desk_uart
@@ -24,12 +24,16 @@ output:
   - platform: gpio
     inverted: true
     id: standing_desk_up_pin
-    pin: ${standing_desk_up_pin}
+    pin:
+      number: ${standing_desk_up_pin}
+      allow_other_uses: true
     
   - platform: gpio
     inverted: true
     id: standing_desk_down_pin
-    pin: ${standing_desk_down_pin}
+    pin:
+      number: ${standing_desk_down_pin}
+      allow_other_uses: true
 
 number:
   - platform: template
@@ -49,10 +53,14 @@ number:
             then:
               - output.turn_on: standing_desk_down_pin
               - wait_until:
-                  lambda: "return id(desk_height)->get_last_read() <= x + 0.4;"
+                  condition:
+                    lambda: "return id(desk_height)->get_last_read() <= x + 0.4;"
+                  timeout: 20s
               - output.turn_off: standing_desk_down_pin
             else:
               - output.turn_on: standing_desk_up_pin
               - wait_until:
-                  lambda: "return id(desk_height)->get_last_read() >= x - 0.4;"
+                  condition:
+                    lambda: "return id(desk_height)->get_last_read() >= x - 0.4;"
+                  timeout: 20s
               - output.turn_off: standing_desk_up_pin

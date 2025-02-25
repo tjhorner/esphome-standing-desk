@@ -16,7 +16,7 @@ All you need to do is specify the correct pins, and the min/max height of your d
 
 ```yaml
 packages:
-  standing_desk: github://tjhorner/esphome-standing-desk/configs/template.yaml
+  standing_desk: github://shadowkora/esphome-standing-desk/configs/template.yaml
 
 substitutions:
   # Required (replace these with your own values!)
@@ -46,7 +46,7 @@ If you only need the component which reads the height from your desk, you can us
 
 ```yaml
 external_components:
-  - source: github://tjhorner/esphome-standing-desk
+  - source: github://shadowkora/esphome-standing-desk
     components: [ standing_desk_height ]
 
 sensor:
@@ -69,7 +69,7 @@ To use, add this line to your config:
 
 ```yaml
 packages:
-  presets_addon: github://tjhorner/esphome-standing-desk/configs/addons/presets.yaml
+  presets_addon: github://shadowkora/esphome-standing-desk/configs/addons/presets.yaml
 ```
 
 Then, if you are not using a pre-made desk config, you must add the following substitutions:

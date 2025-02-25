@@ -4,7 +4,7 @@ esphome:
   board: d1_mini
 
 packages:
-  standing_desk: github://tjhorner/esphome-standing-desk/configs/template.yaml
+  standing_desk: github://shadowkora/esphome-standing-desk/configs/template.yaml
 
 substitutions:
   # Required (replace these with your own values!)

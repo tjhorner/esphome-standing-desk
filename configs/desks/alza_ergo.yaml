@@ -1,0 +1,21 @@
+substitutions:
+  # UART for serial communication with the control box
+  standing_desk_uart_rx_pin: D3
+  
+  # Digital pin reading the Key channel (button press indicator)
+  standing_desk_key_pin: D4
+  
+  # Control panel command pins
+  standing_desk_up_pin: D7
+  standing_desk_down_pin: D8
+  
+  # Variant and height range for this Uplift desk
+  standing_desk_variant: "uplift"
+  standing_desk_min_height: "62"
+  standing_desk_max_height: "128"
+
+  # Preset button pin assignments (based on the control panel’s bit signals)
+  button_bit1_pin: D7
+  button_bit2_pin: D8
+  button_bit4_pin: D4
+  button_m_pin: D1

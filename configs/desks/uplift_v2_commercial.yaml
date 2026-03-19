@@ -1,0 +1,13 @@
+substitutions:
+  standing_desk_uart_rx_pin: D2
+  standing_desk_up_pin: D7
+  standing_desk_down_pin: D8
+  standing_desk_variant: "uplift"
+  standing_desk_min_height: "22.5"
+  standing_desk_max_height: "48.9"
+
+  # Presets
+  button_bit1_pin: D7
+  button_bit2_pin: D8
+  button_bit4_pin: D6
+  button_m_pin: D1
